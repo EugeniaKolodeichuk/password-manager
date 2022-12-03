@@ -5,13 +5,13 @@ import { AuthNav } from '../AuthNav/AuthNav';
 import css from './AppBar.module.css';
 
 export const AppBar = () => {
-    //const { isLoggedIn } = useAuth();
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    console.log('isLoggedIn', isLoggedIn);
 
     return (
         <header className={css.header}>
             <Navigation />
-            <AuthNav />
-            {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
+            {isLoggedIn ? <UserMenu /> : <AuthNav />}
         </header>
     );
 };

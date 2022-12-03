@@ -20,20 +20,26 @@ export const RegisterForm = () => {
     }, [email, password]);
 
     const handleSubmit = (e) => {
-        console.log('event2', e);
         e.preventDefault();
-        const registerList = localStorage.getItem('registerList');
+        const registerList =
+            JSON.parse(localStorage.getItem('registerList')) || [];
+        console.log('register list regf', registerList);
         const form = e.currentTarget;
+
         const registerData = {
             user: form.elements.name.value,
             email: form.elements.email.value,
             password: form.elements.password.value
         };
+        console.log('register data regf', registerData);
 
-        localStorage.setItem('registerList', JSON.stringify([registerData]));
+        registerList.push(registerData);
+
+        localStorage.setItem('registerList', JSON.stringify(registerList));
         localStorage.setItem('loginData', JSON.stringify(registerData));
 
         form.reset();
+        localStorage.setItem('isLoggedIn', true);
         navigate('/dashboard');
     };
 

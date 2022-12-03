@@ -30,7 +30,11 @@ export const LoginForm = () => {
             registerList
         );
 
-        if (!registerList || !isEmailRegistered || !isPasswordRegistered) {
+        if (registerList || isEmailRegistered || isPasswordRegistered) {
+            console.log('loginUser');
+            localStorage.setItem('isLoggedIn', true);
+            navigate('/dashboard');
+        } else {
             localStorage.setItem(
                 'loginData',
                 JSON.stringify({
@@ -40,9 +44,6 @@ export const LoginForm = () => {
             );
             console.log('!loginUser');
             navigate('/register');
-        } else {
-            console.log('loginUser');
-            navigate('/dashboard');
         }
         form.reset();
     };

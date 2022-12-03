@@ -2,15 +2,24 @@
 //import { logOut } from 'redux/auth/operations';
 //import { useAuth } from 'hooks';
 import css from './UserMenu.module.css';
+import { useNavigate } from 'react-router-dom';
 
 export const UserMenu = () => {
+    const navigate = useNavigate();
     //const dispatch = useDispatch();
     //const { user } = useAuth();
+
+    const logOut = () => {
+        localStorage.setItem('isLoggedIn', false);
+        navigate('/login');
+    };
 
     return (
         <div className={css.wrapper}>
             <p className={css.username}>Welcome, user</p>
-            <button type="button">Logout</button>
+            <button type="button" onClick={() => logOut()}>
+                Logout
+            </button>
             {/* <p className={css.username}>Welcome, {user.name}</p>
       <button type="button" onClick={() => dispatch(logOut())}>
         Logout

@@ -25,7 +25,7 @@ const PasswordList = () => {
     const getUserPassword = JSON.parse(
         localStorage.getItem(`${user}-passwords`)
     );
-    const [password, setPassword] = useState(getUserPassword || '');
+    const [password, setPassword] = useState(getUserPassword || []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,10 +65,6 @@ const PasswordList = () => {
         setPassword((prevState) => [obj, ...prevState]);
     };
 
-    const onDeleteContact = (passwordId) => {
-        setPassword(password.filter((password) => password.id !== passwordId));
-    };
-
     const [newName, setNewName] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
@@ -85,10 +81,6 @@ const PasswordList = () => {
                 break;
             default:
         }
-    };
-    const [passwordShown, setPasswordShown] = useState(false);
-    const onRevealContact = () => {
-        setPasswordShown(!passwordShown);
     };
 
     return (
@@ -124,41 +116,6 @@ const PasswordList = () => {
                     </label>
                     <button type="submit">Save</button>
                 </form>
-                <div className={styles.section}>
-                    <ul className={styles.list}>
-                        {password?.map(({ id, name, password }) => (
-                            <li className={styles.item} key={id}>
-                                <p className={styles.name}> {name}:</p>
-                                <input
-                                    type={passwordShown ? 'text' : 'password'}
-                                    value={password}
-                                    className={styles.number}
-                                />
-                                <button
-                                    className={styles.button}
-                                    type="button"
-                                    onClick={() => onRevealContact()}
-                                >
-                                    Reveal
-                                </button>
-                                <button
-                                    className={styles.button}
-                                    type="button"
-                                    //onClick={() => onDeleteContact(id)}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    className={styles.button}
-                                    type="button"
-                                    onClick={() => onDeleteContact(id)}
-                                >
-                                    Delete
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
             </div>
         </>
     );

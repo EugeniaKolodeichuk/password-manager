@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import PasswordItems from '../components/PasswordItems/PasswordItems';
 import PasswordList from '../components/PasswordList/PasswordList';
 
 //import { TaskList } from 'components/TaskList/TaskList';
@@ -19,6 +20,7 @@ export default function Tasks() {
                 <title>Your passwords</title>
             </Helmet>
             <PasswordList />
+            <PasswordItems />
             {/* <h1>Password</h1> */}
             {/*  <TaskEditor />
       <div>{isLoading && 'Request in progress...'}</div>
