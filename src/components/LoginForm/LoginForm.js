@@ -1,66 +1,48 @@
-//import { useDispatch } from 'react-redux';
-//import { logIn } from 'redux/auth/operations';
-import { useEffect, useState } from 'react';
-import css from './LoginForm.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import styles from './LoginForm.module.css';
 
 export const LoginForm = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    //const dispatch = useDispatch();
+    const { updateUserInfo } = useAuth();
 
     const handleSubmit = (e) => {
-        console.log('event', e);
         e.preventDefault();
-        const form = e.currentTarget.elements;
+        const form = e.currentTarget;
 
-        const registerList = localStorage.getItem('registerList');
-        const isEmailRegistered = JSON.parse(registerList)
-            ?.map((value) => value.email)
-            .includes(form.email.value);
-        const isPasswordRegistered = JSON.parse(registerList)
-            ?.map((value) => value.password)
-            .includes(form.password.value);
-
-        console.log(
-            'length',
-            isEmailRegistered,
-            isPasswordRegistered,
-            registerList
+        const registerList = JSON.parse(
+            localStorage.getItem('registerList') || '[]'
         );
 
-        if (registerList || isEmailRegistered || isPasswordRegistered) {
-            console.log('loginUser');
-            localStorage.setItem('isLoggedIn', true);
+        const user = registerList.find(
+            (item) => item.email === form.elements.email.value
+        );
+
+        if (!user) {
+            navigate('/register');
+            return;
+        }
+
+        const passwordMatch = user.password === form.elements.password.value;
+
+        if (passwordMatch) {
+            updateUserInfo(user);
             navigate('/dashboard');
         } else {
-            localStorage.setItem(
-                'loginData',
-                JSON.stringify({
-                    email: form.email.value,
-                    password: form.password.value
-                })
-            );
-            console.log('!loginUser');
-            navigate('/register');
+            alert('Passwords not match');
         }
         form.reset();
     };
 
-    /* useEffect(() => {
-    console.log('mounting phase', email)
-  }, [email]) */
-
     return (
-        <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-            <label className={css.label}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <label className={styles.label}>
                 Email
-                <input type="email" name="email" />
+                <input type="email" name="email" autoComplete="off" />
             </label>
-            <label className={css.label}>
+            <label className={styles.label}>
                 Password
-                <input type="password" name="password" />
+                <input type="password" name="password" autoComplete="off" />
             </label>
             <button type="submit">Log In</button>
         </form>

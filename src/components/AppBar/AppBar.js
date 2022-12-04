@@ -1,17 +1,16 @@
+import { useAuth } from '../AuthContext';
 import { Navigation } from '../Navigation/Navigation';
 import { UserMenu } from '../UserMenu/UserMenu';
 import { AuthNav } from '../AuthNav/AuthNav';
-//import { useAuth } from 'hooks';
-import css from './AppBar.module.css';
+import styles from './AppBar.module.css';
 
 export const AppBar = () => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    console.log('isLoggedIn', isLoggedIn);
+    const { userInfo } = useAuth();
 
     return (
-        <header className={css.header}>
+        <header className={styles.header}>
             <Navigation />
-            {isLoggedIn ? <UserMenu /> : <AuthNav />}
+            {userInfo ? <UserMenu /> : <AuthNav />}
         </header>
     );
 };

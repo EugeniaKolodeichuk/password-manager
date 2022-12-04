@@ -1,29 +1,26 @@
-//import { useDispatch } from 'react-redux';
-//import { logOut } from 'redux/auth/operations';
-//import { useAuth } from 'hooks';
-import css from './UserMenu.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import defaultImg from '../UserMenu/defaultAvatar.png';
+import styles from './UserMenu.module.css';
 
 export const UserMenu = () => {
     const navigate = useNavigate();
-    //const dispatch = useDispatch();
-    //const { user } = useAuth();
+    const { userInfo, updateUserInfo } = useAuth();
+    const avatar = defaultImg;
 
     const logOut = () => {
-        localStorage.setItem('isLoggedIn', false);
+        localStorage.removeItem('loginData');
+        updateUserInfo(null);
         navigate('/login');
     };
 
     return (
-        <div className={css.wrapper}>
-            <p className={css.username}>Welcome, user</p>
+        <div className={styles.wrapper}>
+            <img src={avatar} alt="avatar" className={styles.avatar} />
+            <p className={styles.username}>Welcome, {userInfo.user}</p>
             <button type="button" onClick={() => logOut()}>
                 Logout
             </button>
-            {/* <p className={css.username}>Welcome, {user.name}</p>
-      <button type="button" onClick={() => dispatch(logOut())}>
-        Logout
-      </button> */}
         </div>
     );
 };

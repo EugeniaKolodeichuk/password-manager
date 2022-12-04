@@ -1,83 +1,54 @@
-import styles from './PasswordList.module.css';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import React from 'react';
+import { useAuth } from '../AuthContext';
+import PasswordItem from '../PasswordItem/PasswordItem';
+import styles from './PasswordList.module.css';
 
 const PasswordList = () => {
-    const [user, setUser] = useState('');
-    const [email, setEmail] = useState('');
+    const { userInfo } = useAuth();
+    const [savedPasswords, setSavedPasswords] = useState(null);
+    const [newName, setNewName] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
     useEffect(() => {
-        const parsedData = JSON.parse(localStorage.getItem('loginData'));
-        setEmail(parsedData.email);
-        //setPassword(parsedData.password);
-        setUser(parsedData.user);
+        if (!userInfo) return;
 
-        console.log('parsed data', email);
-    }, [user, email]);
+        const getUserPassword = JSON.parse(
+            localStorage.getItem(`${userInfo.user}-passwords`) || '[]'
+        );
+        setSavedPasswords(getUserPassword);
+    }, [userInfo]);
 
-    console.log('user', user);
+    const onAddContact = (passwordData) => {
+        const savedPasswordList = [passwordData, ...savedPasswords];
+        setSavedPasswords(savedPasswordList);
 
-    useEffect(() => {
-        localStorage.setItem(`${user}-passwords`, JSON.stringify(password));
-        setPassword(password);
-    }, []);
-    const getUserPassword = JSON.parse(
-        localStorage.getItem(`${user}-passwords`)
-    );
-    const [password, setPassword] = useState(getUserPassword || []);
+        localStorage.setItem(
+            `${userInfo.user}-passwords`,
+            JSON.stringify(savedPasswordList)
+        );
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
-        console.log(newName, newPassword);
-        const password = {
+        const passwordData = {
             id: uuidv4(),
             name: newName,
             password: newPassword
         };
-        onAddContact(password);
-        //resetForm();
+        onAddContact(passwordData);
+        form.reset();
     };
-
-    const mockPasswords = [
-        { id: 'id-1', name: 'Rosie Simpson', password: '459-12-56' },
-        { id: 'id-2', name: 'Hermione Kline', password: '443-89-12' },
-        { id: 'id-3', name: 'Eden Clements', password: '645-17-79' },
-        { id: 'id-4', name: 'Annie Copeland', password: '227-91-26' }
-    ];
-
-    const useLocalStorage = (mockPasswords) => {
-        const [password, setPassword] = useState(() =>
-            JSON.parse(localStorage.getItem(`${user}-passwords`))
-        );
-        useEffect(() => {
-            localStorage.setItem(`${user}-passwords`, JSON.stringify(password));
-        }, [password]);
-        return [password, setPassword];
-    };
-
-    console.log('password', password);
-
-    const onAddContact = (obj) => {
-        console.log('obj', obj);
-        console.log('password', password);
-        setPassword((prevState) => [obj, ...prevState]);
-    };
-
-    const [newName, setNewName] = useState('');
-    const [newPassword, setNewPassword] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         switch (name) {
             case 'resource':
                 setNewName(value);
-                console.log('resource', newName);
                 break;
             case 'password':
                 setNewPassword(value);
-                console.log('password', newPassword);
                 break;
             default:
         }
@@ -86,9 +57,6 @@ const PasswordList = () => {
     return (
         <>
             <h1>Your password manager</h1>
-            <h2>
-                {user} {email}
-            </h2>
             <h3>Here you can save your passwords</h3>
             <div>
                 <form
@@ -116,6 +84,25 @@ const PasswordList = () => {
                     </label>
                     <button type="submit">Save</button>
                 </form>
+                <div className={styles.section}>
+                    {savedPasswords?.length ? (
+                        <ul className={styles.list}>
+                            {savedPasswords.map((passwordData) => (
+                                <PasswordItem
+                                    passwordData={passwordData}
+                                    savedPasswords={savedPasswords}
+                                    setSavedPasswords={setSavedPasswords}
+                                />
+                            ))}
+                        </ul>
+                    ) : (
+                        <>
+                            <h3>
+                                Please, add passwords to your password manager
+                            </h3>
+                        </>
+                    )}
+                </div>
             </div>
         </>
     );

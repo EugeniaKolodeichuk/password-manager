@@ -1,18 +1,20 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import PasswordItems from '../components/PasswordItems/PasswordItems';
+import { useNavigate } from 'react-router-dom';
 import PasswordList from '../components/PasswordList/PasswordList';
-
-//import { TaskList } from 'components/TaskList/TaskList';
-//import { TaskEditor } from 'components/TaskEditor/TaskEditor';
+import { useAuth } from '../components/AuthContext';
 
 export default function Tasks() {
-    /*  const dispatch = useDispatch();
-  const isLoading = useSelector(selectLoading);
+    const { userInfo } = useAuth();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]); */
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/dashboard');
+        } else {
+            navigate('/login');
+        }
+    }, [userInfo, navigate]);
 
     return (
         <>
@@ -20,11 +22,6 @@ export default function Tasks() {
                 <title>Your passwords</title>
             </Helmet>
             <PasswordList />
-            <PasswordItems />
-            {/* <h1>Password</h1> */}
-            {/*  <TaskEditor />
-      <div>{isLoading && 'Request in progress...'}</div>
-      <TaskList />  */}
         </>
     );
 }

@@ -1,29 +1,17 @@
-import css from './RegisterForm.module.css';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
+import styles from './RegisterForm.module.css';
 
 export const RegisterForm = () => {
-    const loginData = localStorage.getItem('loginData');
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { updateUserInfo } = useAuth();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (loginData) {
-            const parsedData = JSON.parse(loginData);
-            setEmail(parsedData.email);
-            setPassword(parsedData.password);
-
-            console.log('parsed data', email);
-        }
-    }, [email, password]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const registerList =
-            JSON.parse(localStorage.getItem('registerList')) || [];
-        console.log('register list regf', registerList);
+        const registerList = JSON.parse(
+            localStorage.getItem('registerList') || '[]'
+        );
+
         const form = e.currentTarget;
 
         const registerData = {
@@ -31,7 +19,6 @@ export const RegisterForm = () => {
             email: form.elements.email.value,
             password: form.elements.password.value
         };
-        console.log('register data regf', registerData);
 
         registerList.push(registerData);
 
@@ -39,26 +26,27 @@ export const RegisterForm = () => {
         localStorage.setItem('loginData', JSON.stringify(registerData));
 
         form.reset();
-        localStorage.setItem('isLoggedIn', true);
+        updateUserInfo(registerData);
         navigate('/dashboard');
     };
 
     return (
-        <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-            <label className={css.label}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <label className={styles.label}>
                 Username
-                <input type="text" name="name" />
+                <input type="text" name="name" required autoComplete="off" />
             </label>
-            <label className={css.label}>
+            <label className={styles.label}>
                 Email
-                <input type="email" name="email" defaultValue={email} />
+                <input type="email" name="email" required autoComplete="off" />
             </label>
-            <label className={css.label}>
+            <label className={styles.label}>
                 Password
                 <input
                     type="password"
                     name="password"
-                    defaultValue={password}
+                    required
+                    autoComplete="off"
                 />
             </label>
             <button type="submit">Register</button>
