@@ -55,8 +55,9 @@ const PasswordItem = ({ passwordData, savedPasswords, setSavedPasswords }) => {
                 type={passwordShown ? 'text' : 'password'}
                 readOnly={!isEdit}
                 name="password"
+                maxLength={20}
                 defaultValue={password}
-                className={styles.number}
+                className={styles.input}
                 onChange={handleChange}
             />
             <button

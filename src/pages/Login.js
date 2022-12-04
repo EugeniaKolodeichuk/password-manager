@@ -12,7 +12,7 @@ export default function Login() {
         if (userInfo) {
             navigate('/dashboard');
         }
-    }, [userInfo]);
+    }, [userInfo, navigate]);
 
     return (
         <div>

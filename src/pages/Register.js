@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import { RegisterForm } from '../components/RegisterForm/RegisterForm';
 
-export default function Register(props) {
+export default function Register() {
     const { userInfo } = useAuth();
     const navigate = useNavigate();
 
@@ -12,14 +12,13 @@ export default function Register(props) {
         if (userInfo) {
             navigate('/dashboard');
         }
-    }, [userInfo]);
+    }, [userInfo, navigate]);
 
     return (
         <div>
             <Helmet>
                 <title>Registration</title>
             </Helmet>
-            <h1>{props.name}</h1>
             <RegisterForm />
         </div>
     );

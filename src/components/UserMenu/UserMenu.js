@@ -18,8 +18,12 @@ export const UserMenu = () => {
         <div className={styles.wrapper}>
             <img src={avatar} alt="avatar" className={styles.avatar} />
             <p className={styles.username}>Welcome, {userInfo.user}</p>
-            <button type="button" onClick={() => logOut()}>
-                Logout
+            <button
+                className={styles.button}
+                type="button"
+                onClick={() => logOut()}
+            >
+                Log Out
             </button>
         </div>
     );

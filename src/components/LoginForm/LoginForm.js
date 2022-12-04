@@ -38,13 +38,25 @@ export const LoginForm = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.label}>
                 Email
-                <input type="email" name="email" autoComplete="off" />
+                <input
+                    className={styles.input}
+                    type="email"
+                    name="email"
+                    autoComplete="off"
+                />
             </label>
             <label className={styles.label}>
                 Password
-                <input type="password" name="password" autoComplete="off" />
+                <input
+                    className={styles.input}
+                    type="password"
+                    name="password"
+                    autoComplete="off"
+                />
             </label>
-            <button type="submit">Log In</button>
+            <button className={styles.button} type="submit">
+                Log In
+            </button>
         </form>
     );
 };

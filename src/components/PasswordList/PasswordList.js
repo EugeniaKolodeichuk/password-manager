@@ -55,7 +55,7 @@ const PasswordList = () => {
     };
 
     return (
-        <>
+        <div className={styles.container}>
             <h1>Your password manager</h1>
             <h3>Here you can save your passwords</h3>
             <div>
@@ -67,8 +67,10 @@ const PasswordList = () => {
                     <label className={styles.label}>
                         Resource
                         <input
+                            className={styles.input}
                             type="resource"
                             name="resource"
+                            maxLength={30}
                             required
                             onChange={handleChange}
                         />
@@ -76,15 +78,19 @@ const PasswordList = () => {
                     <label className={styles.label}>
                         Password
                         <input
+                            className={styles.input}
                             type="password"
                             name="password"
+                            maxLength={20}
                             required
                             onChange={handleChange}
                         />
                     </label>
-                    <button type="submit">Save</button>
+                    <button className={styles.button} type="submit">
+                        Save
+                    </button>
                 </form>
-                <div className={styles.section}>
+                <div className={styles.form}>
                     {savedPasswords?.length ? (
                         <ul className={styles.list}>
                             {savedPasswords.map((passwordData) => (
@@ -104,7 +110,7 @@ const PasswordList = () => {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

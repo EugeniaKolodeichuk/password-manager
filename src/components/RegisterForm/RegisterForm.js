@@ -34,22 +34,37 @@ export const RegisterForm = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.label}>
                 Username
-                <input type="text" name="name" required autoComplete="off" />
+                <input
+                    className={styles.input}
+                    type="text"
+                    name="name"
+                    required
+                    autoComplete="off"
+                />
             </label>
             <label className={styles.label}>
                 Email
-                <input type="email" name="email" required autoComplete="off" />
+                <input
+                    className={styles.input}
+                    type="email"
+                    name="email"
+                    required
+                    autoComplete="off"
+                />
             </label>
             <label className={styles.label}>
                 Password
                 <input
+                    className={styles.input}
                     type="password"
                     name="password"
                     required
                     autoComplete="off"
                 />
             </label>
-            <button type="submit">Register</button>
+            <button className={styles.button} type="submit">
+                Register
+            </button>
         </form>
     );
 };
