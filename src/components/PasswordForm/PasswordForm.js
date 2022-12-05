@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../AuthContext';
 import styles from './PasswordForm.module.css';
@@ -34,12 +35,24 @@ const PasswordForm = ({ savedPasswords, setSavedPasswords }) => {
     };
 
     const onAddContact = (passwordData) => {
+        const isExist = savedPasswords.find(
+            (password) => password.name === passwordData.name
+        );
+
+        if (isExist) {
+            toast.error(`Resource ${passwordData.name} exists`);
+            return;
+        }
+
         const savedPasswordList = [passwordData, ...savedPasswords];
         setSavedPasswords(savedPasswordList);
 
         localStorage.setItem(
             `${userInfo.user}-passwords`,
             JSON.stringify(savedPasswordList)
+        );
+        toast.success(
+            `Resource ${passwordData.name} has been added successfully`
         );
     };
 

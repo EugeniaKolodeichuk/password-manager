@@ -49,7 +49,7 @@ const PasswordItem = ({ passwordData, savedPasswords, setSavedPasswords }) => {
     };
 
     return (
-        <li className={styles.item} key={id}>
+        <li className={styles.item}>
             <p className={styles.name}> {name}:</p>
             <input
                 type={passwordShown ? 'text' : 'password'}

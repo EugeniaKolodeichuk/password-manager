@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import styles from './LoginForm.module.css';
@@ -19,6 +20,7 @@ export const LoginForm = () => {
         );
 
         if (!user) {
+            toast.error('Please, register first');
             navigate('/register');
             return;
         }
@@ -29,7 +31,7 @@ export const LoginForm = () => {
             updateUserInfo(user);
             navigate('/dashboard');
         } else {
-            alert('Passwords not match');
+            toast.error('Passwords not match');
         }
         form.reset();
     };

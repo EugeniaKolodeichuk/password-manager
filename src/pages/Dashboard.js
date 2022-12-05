@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import PasswordList from '../components/PasswordList/PasswordList';
@@ -12,6 +13,7 @@ export default function Tasks() {
         if (userInfo) {
             navigate('/dashboard');
         } else {
+            toast.error('Please, log in');
             navigate('/login');
         }
     }, [userInfo, navigate]);

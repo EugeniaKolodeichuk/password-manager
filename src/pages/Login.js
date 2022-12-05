@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { LoginForm } from '../components/LoginForm/LoginForm';
@@ -10,6 +11,7 @@ export default function Login() {
 
     useEffect(() => {
         if (userInfo) {
+            toast.error('You are already logged in');
             navigate('/dashboard');
         }
     }, [userInfo, navigate]);

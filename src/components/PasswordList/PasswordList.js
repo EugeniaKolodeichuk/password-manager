@@ -31,6 +31,7 @@ const PasswordList = () => {
                         <ul className={styles.list}>
                             {savedPasswords.map((passwordData) => (
                                 <PasswordItem
+                                    key={passwordData.id}
                                     passwordData={passwordData}
                                     savedPasswords={savedPasswords}
                                     setSavedPasswords={setSavedPasswords}
