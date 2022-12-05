@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import PasswordList from '../components/PasswordList/PasswordList';
 import { useAuth } from '../components/AuthContext';
 
-export default function Tasks() {
+export default function Dashboard() {
     const { userInfo } = useAuth();
     const navigate = useNavigate();
 

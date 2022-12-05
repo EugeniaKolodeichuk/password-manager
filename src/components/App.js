@@ -1,21 +1,25 @@
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router';
 import { Layout } from './Layout';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Home';
+
+const HomePage = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const DashboardPage = lazy(() => import('../pages/Dashboard'));
+const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
+                <Route index element={<HomePage />} />
                 <Route
                     path="/register"
-                    element={<Register name="register" />}
+                    element={<RegisterPage name="register" />}
                 />
-                <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="*" element={<NotFoundPage />} />
             </Route>
         </Routes>
     );

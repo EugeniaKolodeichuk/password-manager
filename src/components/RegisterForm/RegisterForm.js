@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import styles from './RegisterForm.module.css';
@@ -19,6 +20,15 @@ export const RegisterForm = () => {
             email: form.elements.email.value,
             password: form.elements.password.value
         };
+
+        const isExist = registerList.find(
+            (data) => data.email === registerData.email
+        );
+
+        if (isExist) {
+            toast.error(`User with the email ${registerData.email} exists`);
+            return;
+        }
 
         registerList.push(registerData);
 
