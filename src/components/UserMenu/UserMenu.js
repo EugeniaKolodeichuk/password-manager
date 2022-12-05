@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import defaultImg from '../UserMenu/defaultAvatar.png';
+import defaultImg from '../../assets/defaultAvatar.png';
 import styles from './UserMenu.module.css';
 
 export const UserMenu = () => {
